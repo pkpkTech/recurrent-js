@@ -2,38 +2,12 @@
   "name": "recurrent-js",
   "version": "1.7.4",
   "description": "Various amazingly simple to build and train neural network architectures. The library is an object-oriented neural network approach (baked with Typescript), containing stateless and stateful neural network architectures.",
-  "keywords": [
-    "ai",
-    "artificial intelligence",
-    "recurrent",
-    "stateless",
-    "stateful",
-    "recurrent neural network",
-    "rnn",
-    "deep learning",
-    "dnn",
-    "bayesian network",
-    "bnn",
-    "neural network",
-    "artificial neural network",
-    "deep neural network",
-    "feedforward neural network",
-    "lstm",
-    "long short-term memory",
-    "expression graphs",
-    "automatic differentiation",
-    "backprop",
-    "backpropagation"
-  ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "prepare": "npm run test",
-    "test": "./node_modules/.bin/jasmine --config=jasmine.json",
-    "pretest": "npm run build",
-    "build": "./node_modules/.bin/tsc -p .",
-    "prebuild": "./node_modules/.bin/rimraf dist",
-    "posttest": "./node_modules/.bin/rimraf dist/*.spec.* dist/*.doubles.*"
+    "prebuild": "rimraf dist",
+    "build": "tsc",
+    "prepare": "npm run build"
   },
   "author": "Menno van Rahden",
   "homepage": "https://github.com/mvrahden/recurrent-js#readme",
@@ -44,12 +18,5 @@
     "type": "git",
     "url": "git+https://github.com/mvrahden/recurrent-js.git"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "@types/jasmine": "^2.8.8",
-    "jasmine": "^2.99.0",
-    "rimraf": "^2.6.2",
-    "typescript": "^2.9.2"
-  },
-  "dependencies": {}
+  "license": "MIT"
 }
