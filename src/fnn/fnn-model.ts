@@ -15,31 +15,20 @@ export abstract class FNNModel extends Assertable implements ANN {
   protected graph: Graph;
   protected previousOutput: Mat;
 
-  /**
-   * Generates a Neural Net instance from a pre-trained Neural Net JSON.
-   * @param {{ hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } }} opt Specs of the Neural Net.
-   */
-  constructor(opt: { hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } });
-  /**
-   * Generates a Neural Net with given specs.
-   * @param {NetOpts} opt Specs of the Neural Net. [defaults to: needsBackprop = false, mu = 0, std = 0.01]
-   */
-  constructor(opt: NetOpts);
-  constructor(opt: any) {
+  constructor(...args:
+    [opt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } }] |
+    [opt: NetOpts]) {
     super();
-    this.initializeNeuralNetworkFromGivenOptions(opt);
-  }
-
-  private initializeNeuralNetworkFromGivenOptions(opt: any): void {
-    this.graph = new Graph();
-    if (FNNModel.isFromJSON(opt)) {
-      this.initializeModelFromJSONObject(opt);
+    // 初期状態で生成
+    if (args.length === 1) {
+      this.initializeModelAsFreshInstance(args[0]);
     }
-    else if (FNNModel.isFreshInstanceCall(opt)) {
-      this.initializeModelAsFreshInstance(opt);
-    }
+    // JSONオブジェクトから復元
     else {
-      FNNModel.assert(false, 'Improper input for DNN.');
+      this.architecture = this.determineArchitectureProperties(args[0]);
+      this.training = this.determineTrainingProperties(args[0]);
+      this.model = this.initializeFreshNetworkModel();
+      this.initializeModelFromJSONObject(args[1]);
     }
   }
 
@@ -156,8 +145,8 @@ export abstract class FNNModel extends Assertable implements ANN {
    * @returns squared summed loss
    */
   public backward(expectedOutput: Array<number> | Float64Array, alpha?: number): void {
-    FNNModel.assert(this.graph.isMemorizingSequence(), '['+ this.constructor.name +'] Trainability is not enabled.');
-    FNNModel.assert(typeof this.previousOutput !== 'undefined', '['+ this.constructor.name +'] Please execute `forward()` before calling `backward()`');
+    FNNModel.assert(this.graph.isMemorizingSequence(), '[' + this.constructor.name + '] Trainability is not enabled.');
+    FNNModel.assert(typeof this.previousOutput !== 'undefined', '[' + this.constructor.name + '] Please execute `forward()` before calling `backward()`');
     this.propagateLossIntoDecoderLayer(expectedOutput);
     this.backwardGraph();
     this.updateWeights(alpha);

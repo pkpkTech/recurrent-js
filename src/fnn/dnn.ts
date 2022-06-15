@@ -4,18 +4,10 @@ import { FNNModel } from "./fnn-model";
 
 export class DNN extends FNNModel {
 
-  /**
-   * Generates a Neural Net instance from a pre-trained Neural Net JSON.
-   * @param {{ hidden: { Wh, bh }, decoder: { Wh, b } }} opt Specs of the Neural Net.
-   */
-  constructor(opt: { hidden: { Wh, bh }, decoder: { Wh, b } });
-  /**
-   * Generates a Neural Net with given specs.
-   * @param {NetOpts} opt Specs of the Neural Net. [defaults to: needsBackprop = false, mu = 0, std = 0.01]
-   */
-  constructor(opt: NetOpts);
-  constructor(opt: any) {
-    super(opt);
+  constructor(...args:
+    [opt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } }] |
+    [opt: NetOpts]) {
+    super(...args);
   }
 
   /**
@@ -52,7 +44,7 @@ export class DNN extends FNNModel {
     return json;
   }
 
-  public static fromJSON(json: { hidden: { Wh, bh }, decoder: { Wh, b } }): DNN {
-    return new DNN(json);
+  public static fromJSON(initOpt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh, b } }): DNN {
+    return new DNN(initOpt, json);
   }
 }
