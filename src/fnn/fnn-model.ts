@@ -19,6 +19,7 @@ export abstract class FNNModel extends Assertable implements ANN {
     [opt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } }] |
     [opt: NetOpts]) {
     super();
+    this.graph = new Graph();
     // 初期状態で生成
     if (args.length === 1) {
       this.initializeModelAsFreshInstance(args[0]);
