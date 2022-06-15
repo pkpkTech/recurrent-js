@@ -1,5 +1,5 @@
-import { Mat } from '.';
-import { RNNModel } from './rnn/rnn-model';
+import { Mat } from "./mat";
+import { RNNModel } from "./rnn/rnn-model";
 
 export class Solver {
   protected readonly decayRate: number;
@@ -22,8 +22,8 @@ export class Solver {
 
   /**
    * Performs a RMSprop parameter update of Model.
-   * @param stepSize 
-   * @param l2Regularization 
+   * @param stepSize
+   * @param l2Regularization
    * @param clippingValue Gradient clipping
    * @returns an Object containing the Clipping Ratio
    */
@@ -71,9 +71,9 @@ export class Solver {
   }
 
   /**
-   * 
-   * @param mdwi 
-   * @param clipval 
+   *
+   * @param mdwi
+   * @param clipval
    */
   private gradientClipping(mdwi: number, clipval: number): number {
     if (mdwi > clipval) {
@@ -90,12 +90,12 @@ export class Solver {
 
   /**
    * updates and regularizes
-   * @param m 
-   * @param i 
-   * @param stepSize 
-   * @param mdwi 
-   * @param s 
-   * @param regc 
+   * @param m
+   * @param i
+   * @param stepSize
+   * @param mdwi
+   * @param s
+   * @param regc
    */
   private update(m: Mat, i: number, stepSize: number, mdwi: number, stepCache: Mat, regc: number): void {
     m.w[i] += -stepSize * mdwi / Math.sqrt(stepCache.w[i] + this.smoothEps) - regc * m.w[i];
@@ -103,8 +103,8 @@ export class Solver {
 
   /**
    * resets the gradients for the next iteration
-   * @param currentModelLayer 
-   * @param i 
+   * @param currentModelLayer
+   * @param i
    */
   private resetGradients(currentModelLayer: any, i: number) {
     currentModelLayer.dw[i] = 0;

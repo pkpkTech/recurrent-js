@@ -1,11 +1,12 @@
-import { Mat, Utils } from '..';
-import { Assertable } from './assertable';
+import { Mat } from "../mat";
+import { Utils } from "../utils";
+import { Assertable } from "./assertable";
 
 export class MatOps extends Assertable {
 
   /**
    * Non-destructively pluck a row of m with rowIndex
-   * @param m 
+   * @param m
    * @param rowIndex index of row
    * @returns a column Vector [cols, 1]
    */
@@ -28,7 +29,7 @@ export class MatOps extends Assertable {
 
   /**
    * Non-destructive elementwise gaussian-distributed noise-addition.
-   * @param {Mat} m 
+   * @param {Mat} m
    * @param {number} std Matrix with STD values
    * @returns {Mat} Matrix with results
    */
@@ -66,7 +67,7 @@ export class MatOps extends Assertable {
 
   /**
    * Non-destructive elementwise sigmoid.
-   * @param m 
+   * @param m
    * @returns Mat with results
    */
   public static sig(m: Mat): Mat {
@@ -76,7 +77,7 @@ export class MatOps extends Assertable {
     }
     return out;
   }
-  
+
   private static sigmoid(x: number): number {
     // helper function for computing sigmoid
     return 1.0 / (1 + Math.exp(-x));
@@ -114,8 +115,8 @@ export class MatOps extends Assertable {
 
   /**
    * Non-destructive elementwise add.
-   * @param {Mat} m1 
-   * @param {Mat} m2 
+   * @param {Mat} m1
+   * @param {Mat} m2
    */
   public static add(m1: Mat, m2: Mat): Mat {
     Mat.assert(m1.w.length === m2.w.length && m1.rows === m2.rows, '[class:MatOps] add: dimensions misaligned');
@@ -137,8 +138,8 @@ export class MatOps extends Assertable {
 
   /**
    * Non-destructive Matrix multiplication.
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    * @returns Mat with results
    */
   public static mul(m1: Mat, m2: Mat): Mat {
@@ -172,8 +173,8 @@ export class MatOps extends Assertable {
 
   /**
    * Non-destructive dot Product.
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    * @return {Mat} Matrix of dimension 1x1
    */
   public static dot(m1: Mat, m2: Mat): Mat {
@@ -198,8 +199,8 @@ export class MatOps extends Assertable {
 
   /**
    * Non-destructive elementwise Matrix multiplication.
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    * @return {Mat} Matrix with results
    */
   public static eltmul(m1: Mat, m2: Mat): Mat {

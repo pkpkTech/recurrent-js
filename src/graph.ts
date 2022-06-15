@@ -1,5 +1,5 @@
-import { Mat } from '.';
-import { MatOps } from './utils/mat-ops';
+import { Mat } from "./mat";
+import { MatOps } from "./utils/mat-ops";
 
 export class Graph {
   private needsBackpropagation: boolean;
@@ -48,8 +48,8 @@ export class Graph {
 
   /**
    * Non-destructively pluck a row of m with rowIndex
-   * @param m 
-   * @param rowIndex 
+   * @param m
+   * @param rowIndex
    */
   public rowPluck(m: Mat, rowIndex: number): Mat {
     const out = MatOps.rowPluck(m, rowIndex);
@@ -66,8 +66,8 @@ export class Graph {
 
   /**
    * Non-destructively pluck a row of m with rowIndex
-   * @param m 
-   * @param rowIndex 
+   * @param m
+   * @param rowIndex
    */
   public gauss(m: Mat, std: Mat): Mat {
     const out = MatOps.gauss(m, std);
@@ -76,7 +76,7 @@ export class Graph {
 
   /**
    * Non-destructive elementwise tanh
-   * @param m 
+   * @param m
    */
   public tanh(m: Mat): Mat {
     const out = MatOps.tanh(m);
@@ -93,7 +93,7 @@ export class Graph {
 
   /**
    * Non-destructive elementwise sigmoid
-   * @param m 
+   * @param m
    */
   public sig(m: Mat): Mat {
     const out = MatOps.sig(m);
@@ -110,7 +110,7 @@ export class Graph {
 
   /**
    * Non-destructive elementwise ReLU (rectified linear unit)
-   * @param m 
+   * @param m
    */
   public relu(m: Mat): Mat {
     const out = MatOps.relu(m);
@@ -127,8 +127,8 @@ export class Graph {
 
   /**
    * Non-destructive elementwise addition
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    */
   public add(m1: Mat, m2: Mat): Mat {
     const out = MatOps.add(m1, m2);
@@ -145,8 +145,8 @@ export class Graph {
 
   /**
    * Non-destructive matrix multiplication
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    */
   public mul(m1: Mat, m2: Mat): Mat {
     const out = MatOps.mul(m1, m2);
@@ -163,8 +163,8 @@ export class Graph {
 
   /**
    * Non-destructive Dot product.
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    */
   public dot(m1: Mat, m2: Mat): Mat {
     const out = MatOps.dot(m1, m2);
@@ -181,8 +181,8 @@ export class Graph {
 
   /**
    * Non-destructively elementwise multiplication
-   * @param m1 
-   * @param m2 
+   * @param m1
+   * @param m2
    */
   public eltmul(m1: Mat, m2: Mat): Mat {
     const out = MatOps.eltmul(m1, m2);

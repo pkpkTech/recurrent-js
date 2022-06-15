@@ -1,8 +1,8 @@
-import { Utils } from '.';
-import { Assertable } from './utils/assertable';
+import { Utils } from "./utils";
+import { Assertable } from "./utils/assertable";
 
 export class Mat extends Assertable {
-  
+
   public readonly rows: number;
   public readonly cols: number;
   private readonly _length: number;  // length of 1d-representation of Mat
@@ -11,7 +11,7 @@ export class Mat extends Assertable {
   public readonly dw: Array<number> | Float64Array;
 
   /**
-   * 
+   *
    * @param rows rows of Matrix
    * @param cols columns of Matrix
    */
@@ -26,7 +26,7 @@ export class Mat extends Assertable {
 
   /**
    * Accesses the value of given row and column.
-   * @param row 
+   * @param row
    * @param col
    * @returns the value of given row and column
    */
@@ -38,9 +38,9 @@ export class Mat extends Assertable {
 
   /**
    * Mutates the value of given row and column.
-   * @param row 
-   * @param col 
-   * @param v 
+   * @param row
+   * @param col
+   * @param v
    */
   public set(row: number, col: number, v: number): void {
     const ix = this.getIndexBy(row, col);
@@ -50,8 +50,8 @@ export class Mat extends Assertable {
 
   /**
    * Gets Index by Row-major order
-   * @param row 
-   * @param col 
+   * @param row
+   * @param col
    */
   protected getIndexBy(row: number, col: number): number {
     return (row * this.cols) + col;
@@ -59,7 +59,7 @@ export class Mat extends Assertable {
 
   /**
    * Sets values according to the given Array.
-   * @param arr 
+   * @param arr
    */
   public setFrom(arr: Array<number> | Float64Array): void {
     for (let i = 0; i < arr.length; i++) {
@@ -69,8 +69,8 @@ export class Mat extends Assertable {
 
   /**
    * Overrides the values from the column of the matrix
-   * @param m 
-   * @param colIndex 
+   * @param m
+   * @param colIndex
    */
   public setColumn(m: Mat, colIndex: number): void {
     Mat.assert(m.w.length === this.rows, '[class:Mat] setColumn: dimensions misaligned.');

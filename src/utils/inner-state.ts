@@ -1,4 +1,4 @@
-import { Mat } from './..';
+import { Mat } from "../mat";
 
 /**
  * State of inner activations

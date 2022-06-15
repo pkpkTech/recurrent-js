@@ -1,6 +1,9 @@
-import { Graph, Mat, RandMat, NetOpts } from './..';
-import { ANN } from './ann';
-import { Assertable } from './../utils/assertable';
+import { Graph } from "../graph";
+import { Mat } from "../mat";
+import { RandMat } from "../rand-mat";
+import { Assertable } from "../utils/assertable";
+import { NetOpts } from "../utils/net-opts";
+import { ANN } from "./ann";
 
 export abstract class FNNModel extends Assertable implements ANN {
 
@@ -139,7 +142,7 @@ export abstract class FNNModel extends Assertable implements ANN {
   /**
    * Sets the neural network into a trainable state.
    * Also cleans the memory of forward pass operations, meaning that the last forward pass cannot be used for backpropagation.
-   * @param isTrainable 
+   * @param isTrainable
    */
   public setTrainability(isTrainable: boolean): void {
     this.graph.forgetCurrentSequence();
@@ -147,7 +150,7 @@ export abstract class FNNModel extends Assertable implements ANN {
   }
 
   /**
-   * 
+   *
    * @param expectedOutput Corresponding target for previous Input of forward-pass
    * @param alpha update factor
    * @returns squared summed loss

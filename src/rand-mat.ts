@@ -1,9 +1,10 @@
-import { Mat, Utils } from '.';
+import { Mat } from "./mat";
+import { Utils } from "./utils";
 
 export class RandMat extends Mat {
 
   /**
-   * 
+   *
    * @param rows length of Matrix
    * @param cols depth of Matrix
    * @param mu Population mean for initialization

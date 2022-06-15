@@ -1,5 +1,9 @@
-import { RandMat, Mat, Graph, InnerState, NetOpts } from './..';
-import { RNNModel } from './rnn-model';
+import { Graph } from "../graph";
+import { Mat } from "../mat";
+import { RandMat } from "../rand-mat";
+import { InnerState } from "../utils/inner-state";
+import { NetOpts } from "../utils/net-opts";
+import { RNNModel } from "./rnn-model";
 
 export class RNN extends RNNModel {
   /**
@@ -116,7 +120,7 @@ export class RNN extends RNNModel {
       this.model.hidden.bh[i].update(alpha);
     }
   }
-  
+
   protected updateDecoder(alpha: number): void {
     this.model.decoder.Wh.update(alpha);
     this.model.decoder.b.update(alpha);

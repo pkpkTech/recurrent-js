@@ -1,5 +1,9 @@
-import { Graph, Mat, RandMat, InnerState, NetOpts } from './..';
-import { Assertable } from './../utils/assertable';
+import { Graph } from "../graph";
+import { Mat } from "../mat";
+import { RandMat } from "../rand-mat";
+import { Assertable } from "../utils/assertable";
+import { InnerState } from "../utils/inner-state";
+import { NetOpts } from "../utils/net-opts";
 
 export abstract class RNNModel extends Assertable {
 
@@ -51,7 +55,7 @@ export abstract class RNNModel extends Assertable {
 
   private initializeModelAsFreshInstance(opt: NetOpts): void {
     this.architecture = opt.architecture;
-    
+
     const mu = opt['mu'] ? opt['mu'] : 0;
     const std = opt['std'] ? opt['std'] : 0.01;
 

@@ -1,4 +1,7 @@
-import { Mat, RandMat, Graph, NetOpts } from '.';
+import { Graph } from "./graph";
+import { Mat } from "./mat";
+import { RandMat } from "./rand-mat";
+import { NetOpts } from "./utils/net-opts";
 
 export class Net {
   public W1: Mat;
