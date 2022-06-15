@@ -56,7 +56,7 @@ export abstract class FNNModel extends Assertable implements ANN {
   }
 
   protected initializeHiddenLayerFromJSON(opt: { hidden: { Wh: Array<Mat>; bh: Array<Mat>; }; decoder: { Wh: Mat; b: Mat; }; }): void {
-    FNNModel.assert(!Array.isArray(opt['hidden']['Wh']), 'Wrong JSON Format to recreate Hidden Layer.');
+    FNNModel.assert(Array.isArray(opt['hidden']['Wh']), 'Wrong JSON Format to recreate Hidden Layer.');
     for (let i = 0; i < opt.hidden.Wh.length; i++) {
       this.model.hidden.Wh[i] = Mat.fromJSON(opt.hidden.Wh[i]);
       this.model.hidden.bh[i] = Mat.fromJSON(opt.hidden.bh[i]);
