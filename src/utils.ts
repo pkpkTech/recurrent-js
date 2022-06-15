@@ -1,12 +1,17 @@
 export class Utils {
   /**
+   * 乱数生成関数
+   * Math.random以外を使いたいときは変更する
+   */
+  static random: () => number = Math.random;
+  /**
    * Returns a random floating point number of a uniform distribution between `min` and `max`
    * @param {number} min lower bound
    * @param {number} max upper bound
    * @returns {number} random float value
    */
   public static randf(min: number, max: number): number {
-    return Math.random() * (max - min) + min;
+    return Utils.random() * (max - min) + min;
   }
 
   /**
@@ -63,8 +68,8 @@ export class Utils {
     do {
       u1 = u2 = 0;
       // Convert interval from [0,1) to (0,1)
-      do { u1 = Math.random(); } while (u1 === 0);
-      do { u2 = Math.random(); } while (u2 === 0);
+      do { u1 = Utils.random(); } while (u1 === 0);
+      do { u2 = Utils.random(); } while (u2 === 0);
       z0 = Math.sqrt(-2.0 * Math.log(u1)) * Math.cos(2.0 * Math.PI * u2);
       z0 = z0 / 10.0 + 0.5;
     } while (z0 > 1 || z0 < 0); // resample c
@@ -175,7 +180,7 @@ export class Utils {
         return (count === 1) ? 0 : sum / (count - 1);
 
       default:
-        return ;
+        return;
     }
   }
 
@@ -258,10 +263,10 @@ export class Utils {
   public static softmax(arr: Array<number> | Float64Array): Array<number> | Float64Array {
     const output = [];
     let expSum = 0;
-    for(let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       expSum += Math.exp(arr[i]);
     }
-    for(let i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       output[i] = Math.exp(arr[i]) / expSum;
     }
 
@@ -289,10 +294,10 @@ export class Utils {
   /**
    * Returns an index of the weighted sample of Array `arr`
    * @param {Array<number> | Float64Array} arr Array to be sampled
-   * @returns {number} 
+   * @returns {number}
    */
   public static sampleWeighted(arr: Array<number> | Float64Array): number {
-    const r = Math.random();
+    const r = Utils.random();
     let c = 0.0;
     for (let i = 0; i < arr.length; i++) {
       c += arr[i];
