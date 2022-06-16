@@ -1,11 +1,11 @@
-import { Mat } from "../mat";
+import { Mat, MatJson } from "../mat";
 import { NetOpts } from "../utils/net-opts";
-import { FNNModel } from "./fnn-model";
+import { FNNJson, FNNModel } from "./fnn-model";
 
 export class DNN extends FNNModel {
 
   constructor(...args:
-    [opt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } }] |
+    [opt: NetOpts, json: FNNJson] |
     [opt: NetOpts]) {
     super(...args);
   }
@@ -33,18 +33,18 @@ export class DNN extends FNNModel {
     return hiddenActivations;
   }
 
-  public static toJSON(dnn: DNN): { hidden: { Wh, bh }, decoder: { Wh, b } } {
-    const json = { hidden: { Wh: [], bh: [] }, decoder: { Wh: null, b: null } };
+  public static toJSON(dnn: DNN): FNNJson {
+    const json: FNNJson = { h: { w: [], b: [] }, d: { w: null, b: null } };
     for (let i = 0; i < dnn.model.hidden.Wh.length; i++) {
-      json.hidden.Wh[i] = Mat.toJSON(dnn.model.hidden.Wh[i]);
-      json.hidden.bh[i] = Mat.toJSON(dnn.model.hidden.bh[i]);
+      json.h.w[i] = Mat.toJSON(dnn.model.hidden.Wh[i]);
+      json.h.b[i] = Mat.toJSON(dnn.model.hidden.bh[i]);
     }
-    json.decoder.Wh = Mat.toJSON(dnn.model.decoder.Wh);
-    json.decoder.b = Mat.toJSON(dnn.model.decoder.b);
+    json.d.w = Mat.toJSON(dnn.model.decoder.Wh);
+    json.d.b = Mat.toJSON(dnn.model.decoder.b);
     return json;
   }
 
-  public static fromJSON(initOpt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh, b } }): DNN {
+  public static fromJSON(initOpt: NetOpts, json: FNNJson): DNN {
     return new DNN(initOpt, json);
   }
 }

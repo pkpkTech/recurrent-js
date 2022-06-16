@@ -1,5 +1,5 @@
 import { Graph } from "../graph";
-import { Mat } from "../mat";
+import { Mat, MatJson } from "../mat";
 import { RandMat } from "../rand-mat";
 import { Assertable } from "../utils/assertable";
 import { InnerState } from "../utils/inner-state";
@@ -41,13 +41,13 @@ export abstract class RNNModel extends Assertable {
 
   protected abstract isFromJSON(opt: any): boolean;
 
-  protected initializeModelFromJSONObject(opt: { hidden: any, decoder: { Wh: Mat, b: Mat } }): void {
+  protected initializeModelFromJSONObject(opt: { hidden: any, decoder: { Wh: MatJson, b: MatJson } }): void {
     this.initializeHiddenLayerFromJSON(opt);
     this.model.decoder.Wh = Mat.fromJSON(opt['decoder']['Wh']);
     this.model.decoder.b = Mat.fromJSON(opt['decoder']['b']);
   }
 
-  protected abstract initializeHiddenLayerFromJSON(opt: { hidden: any, decoder: { Wh: Mat, b: Mat } }): void;
+  protected abstract initializeHiddenLayerFromJSON(opt: { hidden: any, decoder: { Wh: MatJson, b: MatJson } }): void;
 
   private isFreshInstanceCall(opt: NetOpts): boolean {
     return RNNModel.has(opt, ['architecture']) && RNNModel.has(opt.architecture, ['inputSize', 'hiddenUnits', 'outputSize']);

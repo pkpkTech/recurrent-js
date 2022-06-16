@@ -1,5 +1,5 @@
 import { Graph } from "../graph";
-import { Mat } from "../mat";
+import { Mat, MatJson } from "../mat";
 import { RandMat } from "../rand-mat";
 import { InnerState } from "../utils/inner-state";
 import { NetOpts } from "../utils/net-opts";
@@ -61,7 +61,7 @@ export class LSTM extends RNNModel {
       && RNNModel.has(opt.decoder, ['Wh', 'b']);
   }
 
-  protected initializeHiddenLayerFromJSON(opt: { hidden: any; decoder: { Wh: Mat; b: Mat; }; }): void {
+  protected initializeHiddenLayerFromJSON(opt: { hidden: any; decoder: { Wh: MatJson; b: MatJson; }; }): void {
     RNNModel.assert(opt.hidden.forget && opt.hidden.forget && opt.hidden.output && opt.hidden.cell, 'Wrong JSON Format to recreat Hidden Layer.');
     this.isValid(opt.hidden.input);
     this.isValid(opt.hidden.forget);

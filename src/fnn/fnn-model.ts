@@ -1,22 +1,44 @@
 import { Graph } from "../graph";
-import { Mat } from "../mat";
+import { Mat, MatJson } from "../mat";
 import { RandMat } from "../rand-mat";
 import { Assertable } from "../utils/assertable";
 import { NetOpts } from "../utils/net-opts";
 import { ANN } from "./ann";
+
+export interface FNNJson {
+  /**
+   * hidden
+   */
+  h: {
+    /** Wh */
+    w: Array<MatJson>;
+    /** bh */
+    b: Array<MatJson>;
+  };
+  /**
+   * decoder
+   */
+  d: {
+    /** Wh */
+    w: MatJson;
+    /** b */
+    b: MatJson;
+  };
+}
 
 export abstract class FNNModel extends Assertable implements ANN {
 
   protected architecture: { inputSize: number, hiddenUnits: Array<number>, outputSize: number };
   protected training: { alpha: number, lossClamp: number, loss: number };
 
-  public model: { hidden: { Wh: Array<Mat>, bh: Array<Mat> }, decoder: { Wh: Mat, b: Mat } } = { hidden: { Wh: [], bh: [] }, decoder: { Wh: null, b: null } };
+  public model: { hidden: { Wh: Array<Mat>, bh: Array<Mat> }, decoder: { Wh: Mat, b: Mat } } =
+    { hidden: { Wh: [], bh: [] }, decoder: { Wh: null, b: null } };
 
   protected graph: Graph;
   protected previousOutput: Mat;
 
   constructor(...args:
-    [opt: NetOpts, json: { hidden: { Wh, bh }, decoder: { Wh: Mat, b: Mat } }] |
+    [opt: NetOpts, json: FNNJson] |
     [opt: NetOpts]) {
     super();
     this.graph = new Graph();
@@ -34,22 +56,22 @@ export abstract class FNNModel extends Assertable implements ANN {
   }
 
   protected static isFromJSON(opt: any): boolean {
-    return FNNModel.has(opt, ['hidden', 'decoder'])
-      && FNNModel.has(opt.hidden, ['Wh', 'bh'])
-      && FNNModel.has(opt.decoder, ['Wh', 'b']);
+    return FNNModel.has(opt, ['h', 'd'])
+      && FNNModel.has(opt.h, ['w', 'b'])
+      && FNNModel.has(opt.d, ['w', 'b']);
   }
 
-  protected initializeModelFromJSONObject(opt: { hidden: { Wh, bh }, decoder: { Wh, b } }): void {
-    this.initializeHiddenLayerFromJSON(opt);
-    this.model.decoder.Wh = Mat.fromJSON(opt['decoder']['Wh']);
-    this.model.decoder.b = Mat.fromJSON(opt['decoder']['b']);
+  protected initializeModelFromJSONObject(json: FNNJson): void {
+    this.initializeHiddenLayerFromJSON(json);
+    this.model.decoder.Wh = Mat.fromJSON(json.d.w);
+    this.model.decoder.b = Mat.fromJSON(json.d.b);
   }
 
-  protected initializeHiddenLayerFromJSON(opt: { hidden: { Wh: Array<Mat>; bh: Array<Mat>; }; decoder: { Wh: Mat; b: Mat; }; }): void {
-    FNNModel.assert(Array.isArray(opt['hidden']['Wh']), 'Wrong JSON Format to recreate Hidden Layer.');
-    for (let i = 0; i < opt.hidden.Wh.length; i++) {
-      this.model.hidden.Wh[i] = Mat.fromJSON(opt.hidden.Wh[i]);
-      this.model.hidden.bh[i] = Mat.fromJSON(opt.hidden.bh[i]);
+  protected initializeHiddenLayerFromJSON(json: FNNJson): void {
+    FNNModel.assert(Array.isArray(json.h.w), 'Wrong JSON Format to recreate Hidden Layer.');
+    for (let i = 0; i < json.h.w.length; i++) {
+      this.model.hidden.Wh[i] = Mat.fromJSON(json.h.w[i]);
+      this.model.hidden.bh[i] = Mat.fromJSON(json.h.b[i]);
     }
   }
 

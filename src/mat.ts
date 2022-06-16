@@ -1,6 +1,16 @@
 import { Utils } from "./utils";
 import { Assertable } from "./utils/assertable";
 
+export interface MatJson {
+  /** rows */
+  r: number;
+  /** cols */
+  c: number;
+  w: Array<number> | Float64Array;
+  n?: number;
+  d?: number;
+};
+
 export class Mat extends Assertable {
 
   public readonly rows: number;
@@ -87,28 +97,28 @@ export class Mat extends Assertable {
    * @returns {boolean} true if equal and false otherwise
    */
   public equals(m: Mat): boolean {
-    if(this.rows !== m.rows || this.cols !== m.cols) {
+    if (this.rows !== m.rows || this.cols !== m.cols) {
       return false;
     }
-    for(let i = 0; i < this._length; i++) {
-      if(this.w[i] !== m.w[i]) {
+    for (let i = 0; i < this._length; i++) {
+      if (this.w[i] !== m.w[i]) {
         return false;
       }
     }
     return true;
   }
 
-  public static toJSON(m: Mat | any): {rows, cols, w} {
-    const json = {rows: 0, cols: 0, w: []};
-    json.rows = m.rows || m.n;
-    json.cols = m.cols || m.d;
+  public static toJSON(m: Mat | any): MatJson {
+    const json: MatJson = { r: 0, c: 0, w: [] };
+    json.r = m.rows || m.n;
+    json.c = m.cols || m.d;
     json.w = m.w;
     return json;
   }
 
-  public static fromJSON(json: {rows, n?, cols, d?, w}): Mat {
-    const rows = json.rows || json.n;
-    const cols = json.cols || json.d;
+  public static fromJSON(json: MatJson): Mat {
+    const rows = json.r || json.n;
+    const cols = json.c || json.d;
     const mat = new Mat(rows, cols);
     for (let i = 0; i < mat._length; i++) {
       mat.w[i] = json.w[i];

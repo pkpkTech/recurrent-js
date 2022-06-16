@@ -1,5 +1,5 @@
 import { Graph } from "../graph";
-import { Mat } from "../mat";
+import { Mat, MatJson } from "../mat";
 import { RandMat } from "../rand-mat";
 import { InnerState } from "../utils/inner-state";
 import { NetOpts } from "../utils/net-opts";
@@ -26,7 +26,7 @@ export class RNN extends RNNModel {
       && RNNModel.has(opt.decoder, ['Wh', 'b']);
   }
 
-  protected initializeHiddenLayerFromJSON(opt: { hidden: { Wh: Mat[], Wx: Mat[], bh: Mat[] }, decoder: { Wh: Mat, b: Mat } }): void {
+  protected initializeHiddenLayerFromJSON(opt: { hidden: { Wh: MatJson[], Wx: MatJson[], bh: MatJson[] }, decoder: { Wh: MatJson, b: MatJson } }): void {
     RNNModel.assert(!Array.isArray(opt['hidden']['Wh']), 'Wrong JSON Format to recreate Hidden Layer.');
     RNNModel.assert(!Array.isArray(opt['hidden']['Wx']), 'Wrong JSON Format to recreate Hidden Layer.');
     RNNModel.assert(!Array.isArray(opt['hidden']['bh']), 'Wrong JSON Format to recreate Hidden Layer.');
