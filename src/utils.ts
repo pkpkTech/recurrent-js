@@ -3,7 +3,7 @@ export class Utils {
    * 乱数生成関数
    * Math.random以外を使いたいときは変更する
    */
-  static random: () => number = Math.random;
+  public static random: () => number = () => Math.random();
   /**
    * Returns a random floating point number of a uniform distribution between `min` and `max`
    * @param {number} min lower bound
